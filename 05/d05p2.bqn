@@ -8,7 +8,8 @@ Solve ← {⟨rules, updates⟩:
   rules ↩ ∧ > rules
   IsCorrect ← ∧´∘∊⟜rules 2⊸↕
   MiddlePage ← ⌊∘÷⟜2∘≠⊸⊑
-  +´ IsCorrect◶0‿MiddlePage¨ updates
+  FixedMiddlePage ← (MiddlePage∘⍒ ∊⟜rules∘⋈⌜˜) ⊑ ⊢
+  +´ IsCorrect◶FixedMiddlePage‿0¨ updates
 }
 
 •Show∘Solve∘Load¨ •args

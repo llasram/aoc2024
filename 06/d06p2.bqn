@@ -33,7 +33,9 @@ Solve ← { 𝕊 map:
     v ⋈ visited
   }
 
-  +´ ∨˝ 1 ⊑ VisitAll obs
+  options ← (⥊igrid) /˜ (0⎉0)⌾(i0⊸⊏) ∨˝ 1 ⊑ VisitAll obs
+  result ← +´ {⊑ VisitAll (1⎉0)⌾(𝕩⊸⊏∘⥊) obs}¨ options
+  result
 }
 
 •Show∘Solve∘Load¨ •args

@@ -8,17 +8,17 @@
 
 Load ← -⟜'0' ¯1⊸↓∘•FBytes
 Solve ← { 𝕊 map:
-  momask ← ¬2|↕≠map
+  momask ← (≠map)⥊1‿0
   mbid ← +` »map
   asize ← (¬momask) × map
   fsize ← momask / map
   ChecksumMove ← { fi 𝕊 cs:
      sz ← fi ⊑ fsize
-     asize ↩ sz⌾((2×fi)⊸⊑) asize
-     ai ← ⊑∘⊐⟜⟨1⟩ asize≥ sz
+     asize sz⌾((2×fi)⊸⊑)↩
+     ai ← ⊑∘⊐⟜1 asize≥ sz
      fb ← ai⊑mbid
-     asize ↩ (-⟜sz)⌾(ai⊸⊑) asize
-     mbid ↩ (+⟜sz)⌾(ai⊸⊑) mbid
+     asize (-⟜sz)⌾(ai⊸⊑)↩
+     mbid (+⟜sz)⌾(ai⊸⊑)↩
      cs+ fi× +´ fb+ ↕sz
   }
 
@@ -26,3 +26,4 @@ Solve ← { 𝕊 map:
 }
 
 •Show∘Solve∘Load¨ •args
+

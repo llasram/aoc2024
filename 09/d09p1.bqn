@@ -8,12 +8,12 @@
 
 Load ← -⟜'0' ¯1⊸↓∘•FBytes
 Solve ← { 𝕊 map:
-  momask ← ¬2|↕≠map
-  ototal ← +´ momask× map
-  obfids ← (⊢/↕∘≠) (momask / map)
+  momask ← (≠map)⥊1‿0
+  omap ← momask/map
+  ototal ← +´ omap
   bomask ← ototal↑map/momask
-  bsel ← (¯1 (⊢×+`) bomask) - (0 (⊢×+`) ¬bomask)
-  bfids ← bsel ⊏ obfids
+  bsel ← (⊒⊸×∘- - ⊢)⟜¬ bomask
+  bfids ← bsel ⊏ /omap
   +´ bfids × ↕ototal
 }
 

@@ -15,13 +15,8 @@ Solve ← { 𝕊 map:
   sameplant ← (neighbori ≥ 0) ∧ (flatmap =⟜(⊏⟜flatmap) neighbori)
   selfsameplant ← 1⊸∾˘ sameplant
   perimeters ← +´˘ ¬sameplant
-  # Side in plant i direction j if:
-  #   1. not sameplant[i][j] and
-  #   2. either:
-  #      a. not sameplant[i][Rot j]
-  #      b. sameplant[neighbori[i][Rot j]][j]
-  PlotSides ← { sp 𝕊 ni: +´ (¬sp) ∧ (¬1⌽sp) ∨ (0‿0⍉(1⌽ni)⊏sameplant) }
-  sides ← sameplant PlotSides˘ neighbori
+  CountCorners ← { sp 𝕊 ni: +´ (¬sp) ∧ (¬1⌽sp) ∨ (0‿0⍉(1⌽ni)⊏sameplant) }
+  sides ← sameplant CountCorners˘ neighbori
   RegionCost ← ≠ × +´∘⊏⟜sides
   Step ← { selfsameplant (⌊´ ⊏⟜𝕩∘/)˘ selfneighbori }
 

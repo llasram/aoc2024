@@ -1,0 +1,31 @@
+#! /usr/bin/env -S bqn -f
+
+_FP ← { F _𝕣 x: {F x↩𝕩}•_while_{x≢𝕩} F x ; 𝕨⊸𝔽 _𝕣 𝕩  }
+
+Load ← >∘•FLines
+deltas ← ⟨0‿1, 1‿0, 0‿¯1, ¯1‿0⟩
+Solve ← { 𝕊 map:
+  ⟨nr, nc⟩ ← mapdim ← ≢map
+  flatmap ← ⥊map
+  flatindex ← ↕≠flatmap
+  Iob ← (0⊸≤ ∧´∘∧ <⟜mapdim)∘⊢
+  CoordIndex ← { r‿c: c + r × nr }
+  neighbori ← > (⥊↕mapdim) {Iob◶¯1‿CoordIndex 𝕨+𝕩}⌜ deltas
+  selfneighbori ← flatindex ∾⎉0‿1 neighbori
+  sameplant ← (neighbori ≥ 0) ∧ (flatmap =⟜(⊏⟜flatmap) neighbori)
+  selfsameplant ← 1⊸∾˘ sameplant
+  perimeters ← +´˘ ¬sameplant
+  # Side in plant i direction j if:
+  #   1. not sameplant[i][j] and
+  #   2. either:
+  #      a. not sameplant[i][Rot j]
+  #      b. sameplant[neighbori[i][Rot j]][j]
+  PlotSides ← { sp 𝕊 ni: +´ (¬sp) ∧ (¬1⌽sp) ∨ (0‿0⍉(1⌽ni)⊏sameplant) }
+  sides ← sameplant PlotSides˘ neighbori
+  RegionCost ← ≠ × +´∘⊏⟜sides
+  Step ← { selfsameplant (⌊´ ⊏⟜𝕩∘/)˘ selfneighbori }
+
+  +´ RegionCost¨ ⊔⊐ Step _FP flatindex
+}
+
+•Show∘Solve∘Load¨ •args

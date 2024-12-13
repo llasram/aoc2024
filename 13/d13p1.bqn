@@ -9,9 +9,12 @@ UnsInv22 ← { 𝕊 [a‿b, c‿d]: [d‿(-b), (-c)‿a] }
 PrizeCost ← { 𝕊 b‿p:
   d ← Det22 b ⋄ {
      0=d ? 0 ;
-     ns ← ÷⟜d p +˝∘×⚇1‿∞ UnsInv22 b ⋄ {
-       (∨´ 100<ns) ∨ (ns≢⌊ns) ? 0 ;
-       +´ ⟨3, 1⟩ × ns
+     uns ← p +˝∘×⚇1‿∞ UnsInv22 b ⋄ {
+       (∨´ 0≠d|uns) ? 0 ;
+       ns ← uns ÷ d ⋄ {
+          (∨´ 100<ns) ? 0 ;
+          +´ ⟨3, 1⟩ × ns
+       }
      }
   }
 }

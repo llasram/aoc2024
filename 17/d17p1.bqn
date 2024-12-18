@@ -4,6 +4,14 @@ ToNats ← { ((>⟜«0⊸≤) / 0(0⊸≤××⟜10⊸+)`⊢) 10⊸≤⊸(¬⊸×
 SplitM ← (¬-˜ ⊢× ·+`»⊸>)⊸⊔
 Load ← { ∾¨ ⟨⟩⊸≢¨⊸SplitM ToNats¨ •FLines 𝕩 }
 
+⟨Xor48⟩ ← {
+  intbase ← 2⋆52
+  suffix ← ¯1 ↑ 64‿16•bit._cast ⟨intbase⟩
+  ToBits ← (3 ↑ 64‿16•bit._cast∘⋈) intbase⊸+
+  FromBits ← (intbase -˜ ⊑∘(16‿64•bit._cast)) ∾⟜suffix
+  Xor48 ⇐ FromBits (16•bit._xor)○ToBits
+}
+
 Solve ← { 𝕊 ⟨a‿b‿c, program⟩:
   ip ← ¯1 ⋄ output ← ⟨⟩
 
@@ -15,10 +23,10 @@ Solve ← { 𝕊 ⟨a‿b‿c, program⟩:
   }∘Read
   ExecuteInstruction ← {
     𝕊 0: a (a ⌊∘÷ 2⋆ComboOperand)↩ ;
-    𝕊 1: b (⊑ ⋈ 32•bit._xor ⋈∘LiteralOperand)↩ ;
+    𝕊 1: b LiteralOperand⊸Xor48↩ ;
     𝕊 2: b (8|ComboOperand)↩ ;
     𝕊 3: ip1 ← (a≠0)◶⟨{𝕤⋄ip}, -⟜1⟩ LiteralOperand@ ⋄ ip↩ip1 ;
-    𝕊 4: b (⊑ ⋈ 32•bit._xor ⋈∘c∘Read)↩ ;
+    𝕊 4: b (c∘Read)⊸Xor48↩ ;
     𝕊 5: output ∾⟜(8|ComboOperand)↩ ;
     𝕊 6: b (a ⌊∘÷ 2⋆ComboOperand)↩ ;
     𝕊 7: c (a ⌊∘÷ 2⋆ComboOperand)↩

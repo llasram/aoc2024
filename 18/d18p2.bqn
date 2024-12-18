@@ -8,15 +8,11 @@ Load ← { > ToNats¨ •FLines 𝕩 }
 moves ← ⟨», »˘, «, «˘⟩
 Solve ← { 𝕊 bytes:
   spos ← ⟨1, 1⟩ ⋄ epos ← 1+⌈˝bytes ⋄ dim ← 2+epos
-  mask ← {⊑◶∞‿0}⎉0 ∧´ moves {𝕎𝕩}¨ <dim⥊1
-  cost0 ← 0⌾(spos⊸⊑) dim⥊∞
-  Step ← { 𝕊 cost: cost⌊ ⌊´ moves {mask+𝕎𝕩}¨ <1+cost }
+  mask ← ∧´ moves {𝕎𝕩}¨ <dim⥊1
+  CanTraverse ← {𝕤⋄ epos⊑ {𝕩∨ ∨´moves{mask×𝕎𝕩}¨<𝕩}_FP 1⌾(spos⊸⊑) dim⥊0}
   MetaStep ← {
     · 𝕊 ·‿1: 𝕩 ;
-    b 𝕊 ·‿0: mask ∞⌾((1+b)⊸⊑)↩ ⋄ {
-      ∞ ≡ epos ⊑ Step _FP cost0 ? b‿1 ;
-      b‿0
-    }
+    b 𝕊 ·‿0: mask 0⌾((1+b)⊸⊑)↩ ⋄ b‿(¬CanTraverse@)
   }
   ⊑ ⟨0‿0, 0⟩ MetaStep˝ ⌽bytes
 }

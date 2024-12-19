@@ -15,7 +15,7 @@ Solve ← { 𝕊 units‿designs:
 }
 
 Display ← { 𝕊 ways:
-  •Show +´ 0≠ways
+  •Show +´ ×ways
   •Show +´ ways
 }
 

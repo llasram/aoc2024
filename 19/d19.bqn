@@ -1,14 +1,11 @@
 #! /usr/bin/env -S bqn -f
 
 SplitM ← (¬-˜ ⊢× ·+`»⊸>)⊸⊔
-Load ← ((¬∘∊⟜", ")⊸SplitM∘⊑ ⋈ 2⊸↓) •FLines
+Load ← ((¬∊⟜", ")⊸SplitM∘⊑ ⋈ 2⊸↓) •FLines
 
 CountMatches ← { lgunits 𝕊 design:
-  np ← ≠lgunits
-  CountSuffix ← { suffix 𝕊 counts:
-    counts (⊣+⊣≠⊸↑⊑⊸×) lgunits ⊑∘∊˜⟜⋈¨ np↑↑suffix
-  }
-  ⊑ (≠⊸↑⟜1 (1⊸↓)∘CountSuffix´ 1↓⌽) ↓design
+  matches ← ⍉ lgunits ⊑⊸(∊˜)˘ (↕≠lgunits) ↑⌜ ↓design
+  ⊑ (≠⊸↑⟜1 (1↓ ⊢+ ≠∘⊢↑ ×⟜⊑)˝ 1↓⌽) matches
 }
 Solve ← { 𝕊 units‿designs:
   (≠¨⊸⊔ units)⊸CountMatches¨ designs

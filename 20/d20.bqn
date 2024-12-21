@@ -4,13 +4,10 @@ _FP ← { ⊑ ((𝔽⋈⊢)⊑)•_while_(≢´) (𝔽𝕩)‿𝕩 ; 𝕨⊸𝔽
 
 Load ← >∘•FLines
 
-
 moves ← ⟨«, »˘, », «˘⟩
 ExpandFringe ← (∨´ <⊸({𝕏𝕨}¨)⟜moves)⊸∧
 CostFillStep ← { 𝕊 ⟨fringe, cost, mask, n⟩:
-  mask ≠↩ fringe
-  fringe ExpandFringe↩ mask
-  cost ⌈↩ n×fringe
+  cost ⌈↩ n × fringe ExpandFringe↩ mask ≠↩ fringe
   ⟨fringe, cost, mask, n+1⟩
 }
 CostFill ← { mask 𝕊 start:

@@ -18,21 +18,22 @@ CostFill ← { mask 𝕊 start:
   1⊑ (CostFillStep)•_while_(∨´∘⥊⊑) ⟨start, start, mask, 2⟩
 }
 
-CheatSavings ← { base‿e2cost‿s2cost 𝕊 cdist:
+CountCheats ← { base‿e2cost‿s2cost 𝕊 cdist:
   cpad ← 2×cdist
   cwin ← 1+cpad
 
   ⟨Pad⟩ ← { Pad ⇐ F˘ (F← »⍟cdist (cpad+≠)↑⊢) }
   mdol ← +´¨ | cdist-˜ ↕cwin‿cwin
   cmask ← cdist≥ mdol
-  CheatSavings ← ⊑⊸{
+  CountWindow ← {
     0 𝕊 ·: 0 ;
     s2cost 𝕊 e2cost: {
       total ← ¯2+e2cost+mdol+s2cost
       +´ ⥊ cmask∧(e2cost>0)∧(base-100)≥total
     }
   }
-  +´ ⥊ s2cost CheatSavings⎉0‿2 cwin‿cwin↕ Pad e2cost
+
+  +´ ⥊ s2cost ⊑⊸CountWindow⎉0‿2 cwin‿cwin↕ Pad e2cost
 }
 
 Solve ← { cdists 𝕊 map:
@@ -43,7 +44,7 @@ Solve ← { cdists 𝕊 map:
   s2cost ← mask0 CostFill 'S'=map
   base ← ¯1+epos⊑s2cost
 
-  ⟨base, e2cost, s2cost⟩⊸CheatSavings¨ cdists
+  ⟨base, e2cost, s2cost⟩⊸CountCheats¨ cdists
 }
 
 {•Show¨ 2‿20 Solve Load 𝕩}¨ •args

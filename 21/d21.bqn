@@ -64,11 +64,13 @@ CountStack ← { d 𝕊 seq:
   d CountDirectional numeric EncodeKeypad seq
 }
 
-Complexity ← { 𝕊 code:
+Complexity ← { d 𝕊 code:
   num ← 0 +⟜(10⊸×)´ ⌽ '0'-˜ ¯1↓ code
-  len ← 25 CountStack code
+  len ← d CountStack code
   num × len
 }
-Solve ← +´ Complexity¨
+Solve ← { ds 𝕊 codes:
+  +´˘ ds Complexity⌜ codes
+}
 
-•Show∘Solve∘Load¨ •args
+•Show¨∘(2‿25⊸Solve)∘Load¨ •args
